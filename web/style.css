@@ -1,0 +1,116 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Background */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    color: white;
+
+    /* Your generated image */
+    background: url("./background.png") no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Dark overlay + blur */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    z-index: -1;
+}
+
+/* Green glow effect */
+body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(29, 185, 84, 0.25), transparent 70%);
+    z-index: -1;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    max-width: 900px;
+    padding: 40px;
+    border-radius: 20px;
+
+    /* Glassmorphism effect */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+
+    text-align: center;
+}
+
+/* Slides */
+.slide {
+    display: none;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.slide.active {
+    display: block;
+}
+
+/* Headings */
+h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+/* Text */
+p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Button */
+button {
+    margin-top: 30px;
+    padding: 12px 28px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 30px;
+
+    background: linear-gradient(135deg, #1DB954, #17a74a);
+    color: white;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Button hover */
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(29, 185, 84, 0.6);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
