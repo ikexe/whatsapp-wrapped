@@ -20,10 +20,6 @@ def rand_time():
     minutes = random.randint(0,60)
     return  datetime.time(hour, minutes)
 
-#converting numpy date to the required style
-
-
-
 vocabulary = sys.argv[1]
 
 f = open('chat.txt', 'a')
@@ -37,23 +33,23 @@ with open(vocabulary, 'r') as file:
     total = []
     #the date format is different in numpy
     start =  datetime64('2025-01-01')
-    end = datetime64('2025-02-01') #exclusive
+    end = datetime64('2026-01-01') #exclusive
     dates = np.arange(start, end) #array of all the dates
     #this logic may cause one person to have multiple characterisitics
     chatterbox = members[np.argmax(sender_p)]
-    short_msgs = random.choice(members, size = 2) #these people will send short messages
+    short_msg = random.choice(members) #these people will send short messages
     nightowl = random.choice(members)
     #need to make an array with nightowl having the highest probability
-    nightsender = prob_array(7)
-    #swapping the max and the nightowl probabilities
-    temp = nightsender[np.argmax(nightsender)]
-    nightsender[np.argmax(nightsender)] = nightsender[members.index(nightowl)]
-    nightsender[members.index(nightowl)] = temp
+    nightsender = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+    nightsender[members.index(nightowl)] = 0.4
     twelve_am = datetime.time(0,0,0)
     four_am  = datetime.time(4,0,0)
     ghost = random.choice(members)
-    prev_sender = "" #this will help in the "Ghosted"
-    print(chatterbox, short_msgs, nightowl, ghost)
+    #NEW PERSONALITY: Selective Responder, Responds only to their favourite person
+    sel_res = random.choice([i for i in members if i != ghost and i != chatterbox])
+    fav = random.choice([i for i in members if i != sel_res and i != ghost])
+    prev_sender = "" #this will help in the "Ghosted and Selective Responder"
+    print(chatterbox, short_msg, nightowl, ghost, sel_res, fav)
 
     for date in dates:
         no_of_msgs = random.randint(0, 101) #number of messages that day
@@ -61,37 +57,52 @@ with open(vocabulary, 'r') as file:
             time = rand_time()
             mtime = time.strftime('%H:%M') #for removing the seconds
             
-            #normal chat
-            sender = random.choice(members, p = sender_p)
-            if sender in short_msgs:
-                no_of_words = random.randint(1, 21) #can't have empty msgs, assuming a short message to be less than or equal to 20 words
-            else:
-                no_of_words = random.randint(10, 51)
             
-            #if the time is between 12am and 4am, the probability of the "Nightowl" sending the message should be higher (this overwrites the above sender)
-            if time >= twelve_am and time <= four_am:
-                sender = random.choice(members, p = nightsender)
-
-            #if previous sender was the ghost, increase their probability to message again
-            # (ISSUE): this may cause the ghost to send more messages than the chatterbox and if ghost is nightowl, it reduces the night activity of the nightowl
-            if prev_sender == ghost:
-                x = random.randint(0, 4)
-                #almost a 1 in 5 chance of the ghost getting ghosted
-                if x == 0:
-                    sender = ghost
-                else:
-                    sender = random.choice(members, p = sender_p)
-            
-            message_arr = random.choice(words, size=no_of_words) #is an array
-            message = ' '.join(message_arr)
             #date.astype(datetime.datetime).strftime('%d/%m/%Y')
             #first changing the date type from dt64 to dt and then changing the format (year prints as yy for %y and YYYY for %Y)
-            data = f'{date.astype(datetime.datetime).strftime('%d/%m/%y')}, {mtime} - {sender}: {message}\n'
-            prev_sender = sender
+            data = f'{date.astype(datetime.datetime).strftime('%d/%m/%y')}, {mtime}'
+            
             total.append(data)
 
     #after generating, we can sort by datetime
     total.sort(key = lambda x: datetime.datetime.strptime(x[:15], "%d/%m/%y, %H:%M"))
+
+    for i in range(len(total)):    
+        #normal chat
+        sender = random.choice(members, p = sender_p)
+        
+        #if the time is between 12am and 4am, the probability of the "Nightowl" sending the message should be higher (this overwrites the above sender)
+        if time >= twelve_am and time <= four_am:
+            sender = random.choice(members, p = nightsender)
+
+        #if previous sender was the ghost, increase their probability to message again
+        if prev_sender == ghost:
+            x = random.randint(0, 3)
+            #almost a 1 in 4 chance of the ghost getting ghosted
+            if x == 0:
+                sender = ghost
+            else:
+                sender = random.choice(members, p = sender_p)
+
+        #if the previous sender was the fav person of sel_res
+        if prev_sender == fav:
+            x = random.randint(0, 2)
+            #almost a 1 in 3 chance of the sel_res responding
+            if x == 0:
+                sender = sel_res
+            else:
+                sender = random.choice(members, p = sender_p)
+
+        #moved this check to the end as the sender keeps changing
+        if sender == short_msg:
+            no_of_words = random.randint(1, 21) #can't have empty msgs, assuming a short message to be less than or equal to 20 words
+        else:
+            no_of_words = random.randint(10, 51)
+        
+        message_arr = random.choice(words, size=no_of_words) #is an array
+        message = ' '.join(message_arr)
+        total[i] = f'{total[i]} - {sender}: {message}\n'
+        prev_sender = sender
 
     for line in total:
         f.write(line)
