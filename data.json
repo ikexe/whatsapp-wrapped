@@ -1,0 +1,24 @@
+{
+    "total_msgs": {
+        "Ishan": 701,
+        "Abhinav": 2295,
+        "P3": 4153,
+        "P4": 3584,
+        "P5": 5465,
+        "P6": 917,
+        "P7": 1985
+    },
+    "total_words": {
+        "Ishan": 20751,
+        "Abhinav": 68066,
+        "P3": 125051,
+        "P4": 38053,
+        "P5": 163825,
+        "P6": 27514,
+        "P7": 60033
+    },
+    "night_owl": "P5",
+    "CNCSE_MSGR": "P4",
+    "busiest_day": "12/12/25",
+    "longest_silence": "1 day, 2:40:00"
+}

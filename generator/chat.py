@@ -1,3 +1,4 @@
+#(ISSUE): chatterbox is sending more messages than nightowl in the night also :(
 import numpy as np
 from numpy import random
 from numpy import datetime64
@@ -45,7 +46,7 @@ with open(vocabulary, 'r') as file:
     twelve_am = datetime.time(0,0,0)
     four_am  = datetime.time(4,0,0)
     ghost = random.choice(members)
-    #NEW PERSONALITY: Selective Responder, Responds only to their favourite person
+    #NEW PERSONALITY: Selective Responder, Responds A LOT to their favourite person
     sel_res = random.choice([i for i in members if i != ghost and i != chatterbox])
     fav = random.choice([i for i in members if i != sel_res and i != ghost])
     prev_sender = "" #this will help in the "Ghosted and Selective Responder"
@@ -56,7 +57,6 @@ with open(vocabulary, 'r') as file:
         for i in range(no_of_msgs + 1):
             time = rand_time()
             mtime = time.strftime('%H:%M') #for removing the seconds
-            
             
             #date.astype(datetime.datetime).strftime('%d/%m/%Y')
             #first changing the date type from dt64 to dt and then changing the format (year prints as yy for %y and YYYY for %Y)
