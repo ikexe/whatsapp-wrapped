@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>WhatsWrapped</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -15,13 +15,15 @@
         </div>
 
         <div class="slide">
-            <h2>Top Senders</h2>
-            <div id="bar-chart"></div>
+            <h2>Total Messages</h2>
+            <p id="total-messages"></p>
+            <div id="messages-chart"></div>
         </div>
 
         <div class="slide">
             <h2>Total Words</h2>
             <p id="total-words"></p>
+            <div id="words-chart"></div>
         </div>
 
         <div class="slide">
@@ -47,6 +49,7 @@
         <div class="slide">
             <h2>Emoji Stats</h2>
             <div id="emoji-stats"></div>
+            <div id="emoji-chart"></div>
         </div>
 
         <div class="slide">
@@ -68,17 +71,18 @@
                 <p id="user-words"></p>
                 <p id="user-emojis"></p>
                 <p id="user-response-time"></p>
-                <div id="user-activity"></div>
+                <div id="user-heatmap"></div>
             </div>
         </div>
 
         <div class="slide">
-            <h1>That’s Your WhatsWrapped</h1>
+            <h1>That's Your WhatsWrapped</h1>
             <p>Comeback Next Year!</p>
         </div>
 
     </div>
-    
+
+    <button id="BackButton">Back</button>
     <button id="NextButton">Next</button>
 
     <script src="app.js" defer></script>
