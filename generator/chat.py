@@ -1,4 +1,3 @@
-#(ISSUE): chatterbox is sending more messages than nightowl in the night also :(
 import numpy as np
 from numpy import random
 from numpy import datetime64
@@ -6,7 +5,7 @@ import datetime
 import os
 import sys
 
-members = ['Ishan', 'Abhinav', 'P3', 'P4', 'P5', 'P6', 'P7'] #members of the gc (who took cs108 this sem :p)
+members = ['Ishan', 'Abhinav', 'Lokesh', 'Mohan', 'Rishanth', 'Bhanu', 'Rutvik'] #members of the gc (who took cs108 this sem :p)
 
 #making an array of probablities
 def prob_array(n):
@@ -30,6 +29,8 @@ with open(vocabulary, 'r') as file:
     words = file.readline().split(sep = ',')
     #each line should be of the form DD/MM/YY, HH:MM - Sender_Name: Message text
     sender_p = prob_array(7) #probability of the message sender
+    sender_p[np.argmax(sender_p)] += 0.25
+    sender_p /= sender_p.sum() #to explicitly increase the chatterbox probability (it was getting lower than ghost and nightowl)
     #the person with the highest probability is automatically the "Chatterbox"
     total = []
     #the date format is different in numpy
@@ -40,17 +41,22 @@ with open(vocabulary, 'r') as file:
     chatterbox = members[np.argmax(sender_p)]
     short_msg = random.choice(members) #these people will send short messages
     nightowl = random.choice(members)
+    ghost = random.choice(members)
     #need to make an array with nightowl having the highest probability
     nightsender = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
     nightsender[members.index(nightowl)] = 0.4
+    nightsender[members.index(chatterbox)] = 0.1
+    nightsender[members.index(ghost)] = 0.1
     twelve_am = datetime.time(0,0,0)
     four_am  = datetime.time(4,0,0)
-    ghost = random.choice(members)
+    
     #NEW PERSONALITY: Selective Responder, Responds A LOT to their favourite person
     sel_res = random.choice([i for i in members if i != ghost and i != chatterbox])
     fav = random.choice([i for i in members if i != sel_res and i != ghost])
+    sender_p[members.index(sel_res)] /= 3 #to explicitly decrease the probability of sel_res normally sending a message
+    sender_p /= sender_p.sum()
     prev_sender = "" #this will help in the "Ghosted and Selective Responder"
-    print(chatterbox, short_msg, nightowl, ghost, sel_res, fav)
+    print(f"chatterbox {chatterbox}, short_msg {short_msg}, nightowl {nightowl}, ghost {ghost}, sel_res {sel_res}, fav {fav}") #comment while submitting
 
     for date in dates:
         no_of_msgs = random.randint(0, 101) #number of messages that day
@@ -70,6 +76,7 @@ with open(vocabulary, 'r') as file:
     for i in range(len(total)):    
         #normal chat
         sender = random.choice(members, p = sender_p)
+        time = datetime.time(int(total[i][10:12]), int(total[i][13:15]))
         
         #if the time is between 12am and 4am, the probability of the "Nightowl" sending the message should be higher (this overwrites the above sender)
         if time >= twelve_am and time <= four_am:
@@ -77,21 +84,27 @@ with open(vocabulary, 'r') as file:
 
         #if previous sender was the ghost, increase their probability to message again
         if prev_sender == ghost:
-            x = random.randint(0, 3)
-            #almost a 1 in 4 chance of the ghost getting ghosted
+            x = random.randint(0, 2)
+            #almost a 1 in 3 chance of the ghost getting ghosted
             if x == 0:
                 sender = ghost
             else:
-                sender = random.choice(members, p = sender_p)
+                if time >= twelve_am and time <= four_am:
+                    sender = random.choice(members, p = nightsender)
+                else:
+                    sender = random.choice(members, p = sender_p)
 
         #if the previous sender was the fav person of sel_res
         if prev_sender == fav:
-            x = random.randint(0, 2)
-            #almost a 1 in 3 chance of the sel_res responding
+            x = random.randint(0, 3)
+            #almost a 1 in 4 chance of the sel_res responding
             if x == 0:
                 sender = sel_res
             else:
-                sender = random.choice(members, p = sender_p)
+                if time >= twelve_am and time <= four_am:
+                    sender = random.choice(members, p = nightsender)
+                else:
+                    sender = random.choice(members, p = sender_p)
 
         #moved this check to the end as the sender keeps changing
         if sender == short_msg:
