@@ -2,7 +2,6 @@ import numpy as np
 from numpy import random
 from numpy import datetime64
 import datetime
-import os
 import sys
 
 members = ['Ishan', 'Abhinav', 'Lokesh', 'Mohan', 'Rishanth', 'Bhanu', 'Rutvik'] #members of the gc (who took cs108 this sem :p)
@@ -39,14 +38,26 @@ with open(vocabulary, 'r') as file:
     dates = np.arange(start, end) #array of all the dates
     #this logic may cause one person to have multiple characterisitics
     chatterbox = members[np.argmax(sender_p)]
-    short_msg = random.choice(members) #these people will send short messages
+    short_msg = random.choice(members) #this person will send short messages
     nightowl = random.choice(members)
     ghost = random.choice(members)
     #need to make an array with nightowl having the highest probability
-    nightsender = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
-    nightsender[members.index(nightowl)] = 0.4
-    nightsender[members.index(chatterbox)] = 0.1
-    nightsender[members.index(ghost)] = 0.1
+    nightsender = prob_array(7)
+    nightsender[members.index(chatterbox)] += 0.25 #so that nightowl doesn't become the ghost
+    nightsender[members.index(short_msg)] += 0.25
+    nightsender /= nightsender.sum()
+    nightsender[members.index(nightowl)] += 0.4
+    nightsender /= nightsender.sum()
+    #Ghost in the day
+    ghostp_d = prob_array(7)
+    ghostp_d[members.index(ghost)] += 0.5
+    ghostp_d /= ghostp_d.sum()
+    #Ghost in the night
+    ghostp_n = prob_array(7)
+    ghostp_n[members.index(nightowl)] += 0.35
+    ghostp_n /= ghostp_n.sum()
+    ghostp_n[members.index(ghost)] += 0.6
+    ghostp_n /= ghostp_n.sum()
     twelve_am = datetime.time(0,0,0)
     four_am  = datetime.time(4,0,0)
     
@@ -55,6 +66,17 @@ with open(vocabulary, 'r') as file:
     fav = random.choice([i for i in members if i != sel_res and i != ghost])
     sender_p[members.index(sel_res)] /= 3 #to explicitly decrease the probability of sel_res normally sending a message
     sender_p /= sender_p.sum()
+    #Selective responder (Day)
+    sel_p_d = prob_array(7)
+    sel_p_d[members.index(sel_res)] += 0.5
+    sel_p_d /= sel_p_d.sum()
+    #Selective responder (Night)
+    sel_p_n = prob_array(7)
+    sel_p_n[members.index(nightowl)] += 0.35
+    sel_p_n /= sel_p_n.sum()
+    sel_p_n[members.index(sel_res)] += 0.6
+    sel_p_n /= sel_p_n.sum()
+    
     prev_sender = "" #this will help in the "Ghosted and Selective Responder"
     print(f"chatterbox {chatterbox}, short_msg {short_msg}, nightowl {nightowl}, ghost {ghost}, sel_res {sel_res}, fav {fav}") #comment while submitting
 
@@ -84,27 +106,18 @@ with open(vocabulary, 'r') as file:
 
         #if previous sender was the ghost, increase their probability to message again
         if prev_sender == ghost:
-            x = random.randint(0, 2)
-            #almost a 1 in 3 chance of the ghost getting ghosted
-            if x == 0:
-                sender = ghost
+            if time >= twelve_am and time <= four_am:
+                sender = random.choice(members, p = ghostp_n)
             else:
-                if time >= twelve_am and time <= four_am:
-                    sender = random.choice(members, p = nightsender)
-                else:
-                    sender = random.choice(members, p = sender_p)
+                sender = random.choice(members, p = ghostp_d)
+                
 
         #if the previous sender was the fav person of sel_res
-        if prev_sender == fav:
-            x = random.randint(0, 3)
-            #almost a 1 in 4 chance of the sel_res responding
-            if x == 0:
-                sender = sel_res
+        if prev_sender == fav: 
+            if time >= twelve_am and time <= four_am:
+                sender = random.choice(members, p = sel_p_n)
             else:
-                if time >= twelve_am and time <= four_am:
-                    sender = random.choice(members, p = nightsender)
-                else:
-                    sender = random.choice(members, p = sender_p)
+                sender = random.choice(members, p = sel_p_d)
 
         #moved this check to the end as the sender keeps changing
         if sender == short_msg:

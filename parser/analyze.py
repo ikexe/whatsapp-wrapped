@@ -174,19 +174,28 @@ group_stats['favourite'] = fav
 for emoji in emojis:
     emoji_stats[emoji] = 0
 for line in lines:
-    pass
+    for emoji in emojis:
+        emoji_stats[emoji] += line.count(emoji)
 
 
 # Most used emojis (per person)
 top3 = {}
-emoji_list = {}
+emoji_count = {}
 for member in members:
-    top3[member] = []
-    emoji_list[member] = []
+    top3[member] = {}
+    emoji_count[member] = {}
+    for emoji in emojis:
+        emoji_count[member][emoji] = 0
+        
 
 for line in lines:
-    sender = line.split[3][:-1]
-    pass
+    sender = line.split()[3][:-1]
+    for emoji in emojis:
+        emoji_count[sender][emoji] += line.count(emoji)
+
+for member in members:
+    emoji_count[member] = dict(sorted(emoji_count[member].items(), key = lambda x : x[1], reverse=True))
+    top3[member] = {k: emoji_count[member][k] for i, k in enumerate(emoji_count[member]) if i < 3}
 
 
 # Busiest Day
@@ -224,8 +233,8 @@ prev_sender = lines[0].split()[3][:-1]
 prev_mtime = datetime.datetime.strptime(lines[0][:15], "%d/%m/%y, %H:%M")
 for i in range(1, len(lines)):
     sender = lines[i].split()[3][:-1]
+    mtime = datetime.datetime.strptime(lines[i][:15], "%d/%m/%y, %H:%M")
     if prev_sender != sender:
-        mtime = datetime.datetime.strptime(lines[i][:15], "%d/%m/%y, %H:%M")
         rtime[sender].append(mtime - prev_mtime)
     prev_sender = sender
     prev_mtime = mtime
@@ -264,7 +273,7 @@ for member in members:
     member_data["total_words"] = no_of_words[member]
     member_data["avg_response_time_mins"] = f'{avg_rtime[member].total_seconds() / 60:.1f}'
     member_data["activity_heatmap"] = activity_heatmap[member]
-    member_data["top3_emojis"] = None
+    member_data["top3_emojis"] = top3[member]
     per_person[member] = member_data
 
 #putting everything in the json file
@@ -274,4 +283,5 @@ data["per_person"] = per_person
 json.dump(data, outfile, indent=4, ensure_ascii=False)
 outfile.close()
 file.close()
+print(f"chatterbox {chatterbox}, short_msg {cncse_msgr}, nightowl {nightowl}, ghost {ghost}, sel_res {sel_res}, fav {fav}") #comment while submitting
 
