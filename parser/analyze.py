@@ -128,6 +128,7 @@ max_ghosted = max(streak_ratio.values())
 for key in streak_ratio.keys():
     if streak_ratio[key] == max_ghosted:
         ghost = key
+group_stats['ghost'] = ghost
 
 # The Conversation Starter
 #The person who starts the convo after a period of silence (assuming 1hr to be a long silence)
