@@ -28,3 +28,33 @@ whatsapp-wrapped/
 - Python
 - JavaScript
 - HTML/CSS
+
+## The JSON format we agreed upon
+{\
+  "group_stats": {\
+    "total_messages_in_chat": int,\
+   "total_words_in_chat":    int,\
+   "chat_duration_days":     int,\
+    "night_owl":              "Name",\
+    "cncse_msgr":             "Name",\
+    "chatterbox":             "Name",\
+    "ghost":                  "Name",\
+    "conversation_starter":   "Name",\
+    "selective_responder":    "Name",\
+    "favourite":              "Name",\
+    "busiest_day":            "DD/MM/YY",\
+    "longest_silence":        "Stringified Timedelta object",\
+    "hype_person":            "Name"\
+  },\
+  "emoji_stats": { "<emoji>": count, ... },\
+  "per_person": {\
+    "Name": {\
+      "total_messages":         int,\
+      "total_words":            int,\
+      "avg_response_time_mins": "X.Y",\
+      "activity_heatmap":       { "00": int, ..., "23": int },\
+      "top3_emojis":            [ "<e1>", "<e2>", "<e3>" ]\
+    },\
+    ...\
+  }\
+}\
