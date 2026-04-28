@@ -1,3 +1,4 @@
+
 let data = null; //will store our JSON data
 let profilesInitialized = false;
 let shownProfiles = new Set(); // Here I have used set to prevent duplicate profiles
@@ -61,40 +62,56 @@ function handleSlideChange(index) {
 
     if (index == 3) 
     {
+        showChatterBox();
+    }
+    
+    if (index == 4)  
+    {
+        showCncseMsgr();
+    }
+    
+    if (index == 5) 
+    {
         showNightOwl();
     }
-
-    if (index == 4) 
+    
+    if (index == 6) 
     {
         showGhost();
     }
 
-    if (index == 5) 
-    {
-        showBusiestDay();
-    }
-
-    if (index == 6) 
-    {
-        showLongestSilence();
-    }
-    
     if (index == 7) 
-    {
-        createEmojiChart();
-    }
-    
-    if (index == 8) 
     {
         showHypePerson();
     }
-    
+
+    if (index == 8) 
+    {
+        showConversationStarter();
+    }
+
     if (index == 9) 
     {
         showSelectiveResponder();
     }
+
+    if (index == 10) 
+    {
+        showBusiestDay();
+    }
+
+    if (index == 11) 
+    {
+        showLongestSilence();
+    }
     
-    if (index == 10 && !profilesInitialized) 
+    if (index == 12) 
+    {
+        createEmojiChart();
+    }
+    
+    
+    if (index == 13 && !profilesInitialized) 
     {
         createProfileButtons();
         profilesInitialized = true;
@@ -123,7 +140,7 @@ function createMessagesChart() {
             datasets: [{
                 label: "Messages",
                 data: values,
-                backgroundColor: "#03f0fc",
+                backgroundColor: "#ffe241",
                 borderRadius: 10
             }]
         },
@@ -131,10 +148,7 @@ function createMessagesChart() {
             responsive: true,
             plugins: {
                 legend: {
-                    display: true,
-                    labels:{
-                        color: "#fce303"
-                    }
+                    display: false
                 }
             },
             scales: {
@@ -173,7 +187,7 @@ function createWordsChart() {
             datasets: [{
                 label: "Words",
                 data: values,
-                backgroundColor: "#fce303",
+                backgroundColor: "#c7a6d3",
                 borderRadius: 10
             }]
         },
@@ -181,10 +195,7 @@ function createWordsChart() {
             responsive: true,
             plugins: {
                 legend: {
-                    display: true,
-                    labels:{
-                        color: "#03f0fc"
-                    }
+                    display: false
                 }
             },
             scales: {
@@ -203,6 +214,16 @@ function createWordsChart() {
     });
 }
 
+function showCncseMsgr() {
+    const nameEl = document.getElementById("cncse-msgr");
+    const infoEl = document.getElementById("cncse-msgr-info");
+    const name = data.group_stats.cncse_msgr;
+    const user = data.per_person[name];
+    const avg = (user.total_words / user.total_messages).toFixed(1);
+    nameEl.textContent = "🤐 " + name;
+    infoEl.textContent ='"Why waste time say lot word when few word do trick?"';
+}
+
 function showNightOwl() {
     const nameEl = document.getElementById("night-owl");
     const infoEl = document.getElementById("night-owl-info");
@@ -210,13 +231,22 @@ function showNightOwl() {
     const name = data.group_stats.night_owl;
     const user = data.per_person[name];
 
-    nameEl.textContent = "🌙 " + name;
+    nameEl.textContent = "🌙🦉" + name;
 
     infoEl.textContent =
-        "Most active late at night with " +
-        user.total_messages +
-        " total messages and an average response time of " +
-        user.avg_response_time_mins + " mins.";
+        "Most messed up sleep schedule. Most active at ungodly hours.";
+}
+
+function showChatterBox() {
+    const nameEl = document.getElementById("chatter-box");
+    const infoEl = document.getElementById("chatter-box-info");
+
+    const name = data.group_stats.chatterbox;
+    const user = data.per_person[name];
+
+    nameEl.textContent = "📢" + name;
+
+    infoEl.textContent = "Yappa Yappa. Certified Yapper. Peak Unemployment.";
 }
 
 function showGhost() {
@@ -228,10 +258,7 @@ function showGhost() {
 
     nameEl.textContent = "👻 " + name;
 
-    infoEl.textContent =
-        "Often disappears from conversations and replies slowly, with an average response time of " +
-        user.avg_response_time_mins +
-        " minutes.";
+    infoEl.textContent = "Gets ghosted most often ಥ_ಥ";
 }
 
 function showBusiestDay() {
@@ -243,7 +270,7 @@ function showBusiestDay() {
     nameEl.textContent = "📅 " + day;
 
     infoEl.textContent =
-        "This was the most active day in the chat with the highest number of messages exchanged.";
+        "Everybody was vibing 😎";
 }
 
 function showLongestSilence() {
@@ -255,7 +282,16 @@ function showLongestSilence() {
     timeEl.textContent = "😶 " + silence;
 
     infoEl.textContent =
-        "This was the longest period where the chat went completely silent.";
+        "Quiet... Too Quiet. Where is everyone?";
+}
+
+function showConversationStarter() {
+    const nameEl = document.getElementById("conversation-starter");
+    const infoEl = document.getElementById("conversation-starter-info");
+    const name = data.group_stats.conversation_starter;
+    nameEl.textContent = "🔥 " + name;
+    infoEl.textContent =
+        "Knows how to get the party started.";
 }
 
 function createEmojiChart() {
@@ -289,7 +325,9 @@ function createEmojiChart() {
                     "#E8A09A",
                     "#44FF07",
                     "#FB13F3"
-                ]
+                ],
+                borderColor:"#000",
+                borderWidth:2
             }]
         },
         options: {
@@ -299,7 +337,7 @@ function createEmojiChart() {
                 legend: {
                     labels: {
                         font: {
-                            size: 15
+                            size:15
                         }
                     }
                 }
@@ -317,10 +355,7 @@ function showHypePerson() {
 
     nameEl.textContent = "⚡ " + name;
 
-    infoEl.textContent =
-        "Always active and quick to respond, with an average response time of " +
-        user.avg_response_time_mins +
-        " minutes.";
+    infoEl.textContent = "One of the greatest mysteries of nature how they are always online.";
 }
 
 function showSelectiveResponder() {
@@ -330,12 +365,9 @@ function showSelectiveResponder() {
     const name = data.group_stats.selective_responder;
     const user = data.per_person[name];
 
-    nameEl.textContent = "🎯 " + name;
+    nameEl.textContent = "😉 " + name;
 
-    infoEl.textContent =
-        "Chooses when to engage in conversations, with a slower average response time of " +
-        user.avg_response_time_mins +
-        " minutes.";
+    infoEl.textContent = 'Always ready to respond to their "Favourite person" 😏';
 }
 
 function createProfileButtons() {
@@ -372,6 +404,8 @@ function showUserProfile(name) {
         <p>Words: ${user.total_words}</p>
         <p>Top Emojis: ${user.top3_emojis.join(", ")}</p>
         <p>Avg Response Time: ${user.avg_response_time_mins} mins</p>
+        <br>
+        <p style="font-size:1.25em; color:pink";>Activity Heatmap 🥵</p>
         <div class="heatmap"></div>
     `;
 
@@ -384,7 +418,7 @@ function showUserProfile(name) {
 function createHeatmap(container, heatmapData) {
     container.innerHTML = "";
 
-    // finding max value of messages a person has sent to specify maximum value
+    // find max value for scaling
     let max = 0;
     for (let hour in heatmapData) {
         if (heatmapData[hour] > max) {
@@ -392,21 +426,23 @@ function createHeatmap(container, heatmapData) {
         }
     }
 
-    // created 24 boxess
+    // create 24 boxes
     for (let i = 0; i < 24; i++) {
-        const value = heatmapData[i];
+
+        let key = i < 10 ? "0" + i : "" + i;
+        let value = heatmapData[key];
 
         const box = document.createElement("div");
         box.classList.add("heat-box");
 
-        // intensity (0 to 1) value is always <=1
+        // intensity (0 → 1)
         let intensity = value / max;
 
-        // color 
-        box.style.backgroundColor = `rgba(3, 240, 252, ${intensity})`;
+        // color scaling
+        box.style.backgroundColor = `rgba(204,134,235, ${intensity})`;
 
-        // when we hove we see
-        box.title = `${i}:00 → ${value} messages`;
+        // tooltip
+        box.title = `${key}:00 → ${value} messages`;
 
         container.appendChild(box);
     }
