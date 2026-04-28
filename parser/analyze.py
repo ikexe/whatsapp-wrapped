@@ -263,10 +263,7 @@ activity_heatmap = {}
 for member in members:
     activity_heatmap[member] = {}
     for i in range(0, 24):
-        if i < 10:
-            key = f'0{i}'
-        else:
-            key = str(i)
+        key = str(i)
         activity_heatmap[member][key] = 0
 
 for line in lines:
