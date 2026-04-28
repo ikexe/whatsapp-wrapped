@@ -75,7 +75,7 @@ with open(vocabulary, 'r') as file:
     sel_p_n /= sel_p_n.sum()
     
     prev_sender = "" #this will help in the "Ghosted and Selective Responder"
-    print(f"chatterbox {chatterbox}, short_msg {short_msg}, nightowl {nightowl}, ghost {ghost}, sel_res {sel_res}, fav {fav}") #comment while submitting
+    #print(f"chatterbox {chatterbox}, short_msg {short_msg}, nightowl {nightowl}, ghost {ghost}, sel_res {sel_res}, fav {fav}") #comment while submitting
 
     for date in dates:
         no_of_msgs = random.randint(0, 101) #number of messages that day

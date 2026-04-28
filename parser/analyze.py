@@ -115,15 +115,19 @@ for line in lines:
         if not streak:
             streaks[sender] += 1
             streak = True
-        else:
-            streak = False
+    else:
+        streak = False
     prev = sender
 
-most_streaks = max(streaks.values())
-for key in streaks.keys():
-    if streaks[key] == most_streaks:
+#Making Ghost as the highest ratio of streak from sent messages
+streak_ratio = {}
+for member in members:
+    streak_ratio[member] = streaks[member] / no_of_msgs[member]
+
+max_ghosted = max(streak_ratio.values())
+for key in streak_ratio.keys():
+    if streak_ratio[key] == max_ghosted:
         ghost = key
-group_stats["ghost"] = ghost
 
 # The Conversation Starter
 #The person who starts the convo after a period of silence (assuming 1hr to be a long silence)
@@ -287,5 +291,5 @@ data["per_person"] = per_person
 json.dump(data, outfile, indent=4, ensure_ascii=False)
 outfile.close()
 file.close()
-print(f"chatterbox {chatterbox}, short_msg {cncse_msgr}, nightowl {nightowl}, ghost {ghost}, sel_res {sel_res}, fav {fav}") #comment while submitting
+#print(f"chatterbox {chatterbox}, short_msg {cncse_msgr}, nightowl {nightowl}, ghost {ghost}, sel_res {sel_res}, fav {fav}") #comment while submitting
 
