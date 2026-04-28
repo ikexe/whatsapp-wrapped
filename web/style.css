@@ -1,20 +1,25 @@
-body {
+body 
+{
     margin: 0;
     padding: 0;
-    font-family: 'Playfair Display', serif;
-    color: white;
-    background: url("background.png") no-repeat center center fixed;
-    background-size: cover;
-    overflow: hidden;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:#c5ff26;
+    background: url("background.png");
+    background-size:cover;
+    overflow:hidden; /*It hides the extra content which doesn't fit in the page*/
 }
 
-.container {
+.container 
+{
+    padding: 0%;
+    margin:0%;
     width: 100vw;
     height: 100vh;
     position: relative;
 }
 
-.slide {
+.slide 
+{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -29,73 +34,62 @@ body {
     transition: all 0.6s ease;
 }
 
-.slide.active {
+.slide.active 
+{
     opacity: 1;
     transform: scale(1);
     z-index: 1;
     animation: smoothFadeUp 0.7s ease;
 }
  
-h1 {
+h1 
+{
     font-size: 60px;
     margin-bottom: 20px;
     font-weight: 700;
 }
 
-h2 {
-    font-size: 40px;
+h2 
+{
+    font-size: 60px;
     margin-bottom: 15px;
     font-weight: 600;
 }
 
-p {
-    font-size: 22px;
-    opacity: 0.9;
+p 
+{
+    font-size: 30px;
     max-width: 600px;
 }
 
 #BackButton {
     position: fixed;
-    bottom: 50px;
-    left: 50px;
+    bottom: 45%;
+    top: 45%;
+    left: 10px;
     z-index: 2;
-    padding: 15px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    border: 1px solid green;
-    border-radius: 30px;
-    background: white;
-    color: black;
+    border: 4px solid #c5ff26;
+    border-radius: 1000px;
+    background: #c5ff26;
     cursor:pointer;
-}
-
-#BackButton:hover {
-    border-color: aquamarine;
-    background:forestgreen;
-    color: white;
-    transform: scale(1.05);
 }
 
 #NextButton {
     position: fixed;
-    bottom: 50px;
-    right: 50px;
+    bottom: 45%;
+    top: 45%;
+    right: 10px;
     z-index: 2;
-    padding: 15px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    border: 1px solid green;
-    border-radius: 30px;
-    background: white;
-    color: black;
+    border: 4px solid #c5ff26;
+    border-radius: 1000px;
+    background:#c5ff26;
     cursor:pointer;
 }
 
-#NextButton:hover {
-    border-color: aquamarine;
-    background:forestgreen;
-    color: white;
-    transform: scale(1.05);
+#NextButton:hover ,#BackButton:hover {
+    border-color: #b4f306;
+    background:#b4f306;
+    transform: scale(1.10);
 }
 
 @keyframes smoothFadeUp {
@@ -109,30 +103,117 @@ p {
     }
 } 
 
-#NextButton, #BackButton {
+.chart-box 
+{
+    width: 700px;
+    height: 700px;
+}
+
+#profile-buttons 
+{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#profile-buttons button
+{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 10px;
+    background:#25D366;
+    color: white;
+    cursor:pointer;
+    font-weight: 800;
+}
+
+#profile-buttons button:hover 
+{
+    background: aquamarine;
+    color:blue;
+    transform: scale(1.1);
     transition: all 0.2s ease;
 }
 
-#messages-chart, #words-chart, #emoji-chart {
-    width: 600px;
-    height: 300px;
-}
-
-#user-heatmap {
-    width: 600px;
-    height: 160px;
-    margin-top: 12px;
-}
-
-#user-profile {
-    overflow-y: auto;
-    max-height: 60vh;
-}
-
-#profile-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+#user-profile 
+{
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
     gap: 10px;
-    margin-bottom: 20px;
+    column-gap: 30px;
+    justify-content: center;
+    align-items: start;
+    max-width: 100vw;
+    max-height: 100vh;
 }
+
+.profile-card 
+{
+    width: 100%;           
+    padding: 10px;
+    border-radius: 15px;
+    text-align: center;
+    background: rgba(3,140,252,0.2);
+    backdrop-filter: blur(100px);
+}
+
+.profile-card p 
+{
+    font-size: 13px;
+    margin: 5px 0;
+    max-width: 100%;
+}
+
+.profile-card h3 
+{
+    font-size: 21px;
+    margin:0;
+}
+
+.heatmap 
+{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 3px;
+    margin-top: 10px;
+}
+
+.heat-box 
+{
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+#night-owl, #ghost, #busiest-day, #longest-silence,
+#hype-person, #selective-responder, #conversation-starter,
+#cncse-msgr,#chatter-box {
+    font-size: 80px;
+    color: aliceblue;
+}
+
+#emoji-chart-box 
+{
+    width: 500px;
+    height: 500px;
+}
+
+#BackButton, #NextButton {
+    padding: 14px 18px;      
+    line-height: 0;           
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+#BackButton img, #NextButton img 
+{
+    display: block;
+    width: 30px;
+    height: 30px;
+    transition: transform 0.2s ease;
+}
+
