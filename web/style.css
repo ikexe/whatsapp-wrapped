@@ -217,3 +217,9 @@ p
     transition: transform 0.2s ease;
 }
 
+#profile-buttons button.active 
+{
+    background: #b4f306;
+    color: #000;
+}
+
