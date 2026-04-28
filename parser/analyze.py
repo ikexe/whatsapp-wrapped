@@ -27,7 +27,7 @@ emojis = list(filter(None, emojis))
 
 f = sys.argv[1]
 
-outfile = open('data.json', 'a')
+outfile = open('data.json', 'w')
 file = open(f, 'r')
 lines = file.readlines()
 data = {}
@@ -111,9 +111,12 @@ streak = False
 prev = ""
 for line in lines:
     sender = line.split()[3][:-1]
-    if sender == prev and not streak:
-        streaks[sender] += 1
-        streak = True
+    if sender == prev :
+        if not streak:
+            streaks[sender] += 1
+            streak = True
+        else:
+            streak = False
     prev = sender
 
 most_streaks = max(streaks.values())

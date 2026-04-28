@@ -21,7 +21,7 @@ def rand_time():
 
 vocabulary = sys.argv[1]
 
-f = open('chat.txt', 'a')
+f = open('chat.txt', 'w')
 #generating the chat
 #taking a span of 1 year to start off say 1-1-25 to 1-2-25
 with open(vocabulary, 'r') as file:
@@ -38,12 +38,11 @@ with open(vocabulary, 'r') as file:
     dates = np.arange(start, end) #array of all the dates
     #this logic may cause one person to have multiple characterisitics
     chatterbox = members[np.argmax(sender_p)]
-    short_msg = random.choice(members) #this person will send short messages
-    nightowl = random.choice(members)
-    ghost = random.choice(members)
+    #NEW PERSONALITY: Selective Responder, Responds A LOT to their favourite person
+    short_msg, nightowl, ghost, sel_res, fav = random.choice([i for i in members if i != chatterbox], size=5, replace=False)
     #need to make an array with nightowl having the highest probability
     nightsender = prob_array(7)
-    nightsender[members.index(chatterbox)] += 0.25 #so that nightowl doesn't become the ghost
+    nightsender[members.index(chatterbox)] += 0.25
     nightsender[members.index(short_msg)] += 0.25
     nightsender /= nightsender.sum()
     nightsender[members.index(nightowl)] += 0.4
@@ -61,9 +60,7 @@ with open(vocabulary, 'r') as file:
     twelve_am = datetime.time(0,0,0)
     four_am  = datetime.time(4,0,0)
     
-    #NEW PERSONALITY: Selective Responder, Responds A LOT to their favourite person
-    sel_res = random.choice([i for i in members if i != ghost and i != chatterbox])
-    fav = random.choice([i for i in members if i != sel_res and i != ghost])
+
     sender_p[members.index(sel_res)] /= 3 #to explicitly decrease the probability of sel_res normally sending a message
     sender_p /= sender_p.sum()
     #Selective responder (Day)
@@ -88,7 +85,7 @@ with open(vocabulary, 'r') as file:
             
             #date.astype(datetime.datetime).strftime('%d/%m/%Y')
             #first changing the date type from dt64 to dt and then changing the format (year prints as yy for %y and YYYY for %Y)
-            data = f'{date.astype(datetime.datetime).strftime('%d/%m/%y')}, {mtime}'
+            data = f'{date.astype(datetime.datetime).strftime("%d/%m/%y")}, {mtime}'
             
             total.append(data)
 
