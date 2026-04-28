@@ -1,11 +1,10 @@
-
 let data = null; //will store our JSON data
 let profilesInitialized = false;
-let shownProfiles = new Set(); // Here I have used set to prevent duplicate profiles
+let shownProfiles = new Map(); // Here I have used set to prevent duplicate profiles
 let currentSlide = 0; // used to track which slide we are at currently (viewer will see this slide)
 let slides = []; // this will store all elements of HTML that act as slides.
 
-fetch('../data.json') // Fetched data from server(requesting a file named data.json)
+fetch('data.json') // Fetched data from server(requesting a file named data.json)
     .then(response => response.json()) // this respnse is then parsed into json format(converts the response to JSON)
     .then(jsonData => { // jsonData contains the javascript object and then data stores it and thne initialize function is called to run our website
         data = jsonData;
@@ -378,19 +377,22 @@ function createProfileButtons() {
         button.textContent = person;
 
         button.addEventListener("click", function () {
-            showUserProfile(person);
+            toggleUserProfile(person,button);
         });
 
         container.appendChild(button);
     }
 }
 
-function showUserProfile(name) {
+function toggleUserProfile(name,button) {
 
     if (shownProfiles.has(name)) 
+    {
+        shownProfiles.get(name).remove();
+        shownProfiles.delete(name);
+        button.classList.remove("active");
         return;
-
-    shownProfiles.add(name);
+    }
 
     const container = document.getElementById("user-profile");
     const user = data.per_person[name];
@@ -413,6 +415,9 @@ function showUserProfile(name) {
 
     const heatmapDiv = card.querySelector(".heatmap");
     createHeatmap(heatmapDiv, user.activity_heatmap);
+    
+    shownProfiles.set(name, card);     
+    button.classList.add("active");
 }
 
 function createHeatmap(container, heatmapData) {
