@@ -1,90 +1,122 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WhatsWrapped</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>WhatsWrapped</title> <!--Our Project title is WhatsWrapped Inspired from Spotify Wrapped-->
+    <script src="chart.umd.js"></script> 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
 
-        <div class="slide active">
+        <div class="slide active">  <!---->
             <h1>WhatsWrapped</h1>
-            <p>Explore the Stats.</p>
+            <p>Every chat tells a story. Yours just happens to be unhinged :p</p>
         </div>
 
         <div class="slide">
             <h2>Total Messages</h2>
             <p id="total-messages"></p>
-            <div id="messages-chart"></div>
+            
+            <div class="chart-box">
+                <canvas id="messages-chart"></canvas>
+            </div>
         </div>
-
+ 
         <div class="slide">
             <h2>Total Words</h2>
             <p id="total-words"></p>
-            <div id="words-chart"></div>
+            
+            <div class="chart-box">
+                <canvas id="words-chart"></canvas>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Chatter Box</h2>
+            <p id="chatter-box"></p>
+            <p id="chatter-box-info"></p>
+        </div>
+
+        <div class="slide">
+            <h2>Cncse Msgr</h2>
+            <p id="cncse-msgr"></p>
+            <p id="cncse-msgr-info"></p>
         </div>
 
         <div class="slide">
             <h2>Night Owl</h2>
             <p id="night-owl"></p>
+            <p id="night-owl-info"></p>
         </div>
 
         <div class="slide">
             <h2>Ghost</h2>
             <p id="ghost"></p>
-        </div>
-
-        <div class="slide">
-            <h2>Busiest Day</h2>
-            <p id="busiest-day"></p>
-        </div>
-
-        <div class="slide">
-            <h2>Longest Silence</h2>
-            <p id="longest-silence"></p>
-        </div>
-
-        <div class="slide">
-            <h2>Emoji Stats</h2>
-            <div id="emoji-stats"></div>
-            <div id="emoji-chart"></div>
+            <p id="ghost-info"></p>
         </div>
 
         <div class="slide">
             <h2>Hype Person</h2>
             <p id="hype-person"></p>
+            <p id="hype-person-info"></p>
+        </div>
+
+         <div class="slide">
+            <h2>Conversation Starter</h2>
+            <p id="conversation-starter"></p>
+            <p id="conversation-starter-info"></p>
         </div>
 
         <div class="slide">
             <h2>Selective Responder</h2>
             <p id="selective-responder"></p>
+            <p id="selective-responder-info"></p>
         </div>
+
+        <div class="slide">
+            <h2>Busiest Day</h2>
+            <p id="busiest-day"></p>
+            <p id="busiest-day-info"></p>
+        </div>
+
+        <div class="slide">
+            <h2>Longest Silence</h2>
+            <p id="longest-silence"></p>
+            <p id="silence-info"></p>
+        </div>
+       
+        <div class="slide">
+            <h2>Emoji Stats</h2>
+            <div id="emoji-stats"></div>
+            
+            <div class="chart-box" id="emoji-chart-box">
+                <canvas id="emoji-chart"></canvas>
+            </div>
+        </div>
+
 
         <div class="slide">
             <h2>User Profiles</h2>
             <div id="profile-buttons"></div>
             <div id="user-profile">
-                <h3 id="user-name"></h3>
-                <p id="user-messages"></p>
-                <p id="user-words"></p>
-                <p id="user-emojis"></p>
-                <p id="user-response-time"></p>
-                <div id="user-heatmap"></div>
             </div>
         </div>
 
         <div class="slide">
-            <h1>That's Your WhatsWrapped</h1>
-            <p>Comeback Next Year!</p>
+            <h1>That's a Wrap!</h1>
+            <p>Now it's time to mute the chat again ;)</p>
         </div>
 
     </div>
 
-    <button id="BackButton">Back</button>
-    <button id="NextButton">Next</button>
+<button id="BackButton" >
+    <img src="arrow-left.svg" alt="">
+</button>
+<button id="NextButton">
+    <img src="arrow-right.svg" alt="">
+</button>
 
-    <script src="app.js" defer></script>
+    <script src="app.js" ></script>
 </body>
 </html>
