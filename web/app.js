@@ -5,7 +5,7 @@ let shownProfiles = new Set(); // Here I have used set to prevent duplicate prof
 let currentSlide = 0; // used to track which slide we are at currently (viewer will see this slide)
 let slides = []; // this will store all elements of HTML that act as slides.
 
-fetch('data.json') // Fetched data from server(requesting a file named data.json)
+fetch('../data.json') // Fetched data from server(requesting a file named data.json)
     .then(response => response.json()) // this respnse is then parsed into json format(converts the response to JSON)
     .then(jsonData => { // jsonData contains the javascript object and then data stores it and thne initialize function is called to run our website
         data = jsonData;
