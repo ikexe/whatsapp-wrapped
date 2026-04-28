@@ -180,6 +180,7 @@ for line in lines:
 
 # Most used emojis (per person)
 top3 = {}
+top3_emojis = []
 emoji_count = {}
 for member in members:
     top3[member] = {}
@@ -273,7 +274,7 @@ for member in members:
     member_data["total_words"] = no_of_words[member]
     member_data["avg_response_time_mins"] = f'{avg_rtime[member].total_seconds() / 60:.1f}'
     member_data["activity_heatmap"] = activity_heatmap[member]
-    member_data["top3_emojis"] = top3[member]
+    member_data["top3_emojis"] = list(top3[member].keys())
     per_person[member] = member_data
 
 #putting everything in the json file
