@@ -8,7 +8,6 @@
 
 <body>
     <div class="container">
-
         <div class="slide active">  <!---->
             <h1>WhatsWrapped</h1>
             <p>Every chat tells a story. Yours just happens to be unhinged :p</p>
@@ -36,18 +35,27 @@
             <h2>Chatter Box</h2>
             <p id="chatter-box"></p>
             <p id="chatter-box-info"></p>
+
         </div>
 
         <div class="slide">
             <h2>Cncse Msgr</h2>
             <p id="cncse-msgr"></p>
             <p id="cncse-msgr-info"></p>
+
+            <div class="chart-box" id="cncse-chart-box">
+            <canvas id="cncse-chart"></canvas>
+            </div>
         </div>
 
         <div class="slide">
             <h2>Night Owl</h2>
             <p id="night-owl"></p>
             <p id="night-owl-info"></p>
+
+            <div class="chart-box" id="night-owl-box">
+                <canvas id="night-owl-chart"></canvas>
+            </div>
         </div>
 
         <div class="slide">
@@ -60,6 +68,10 @@
             <h2>Hype Person</h2>
             <p id="hype-person"></p>
             <p id="hype-person-info"></p>
+
+            <div class="chart-box" id="hype-chart-box">
+                <canvas id="hype-chart"></canvas>
+            </div>
         </div>
 
          <div class="slide">
@@ -116,7 +128,7 @@
 <button id="NextButton">
     <img src="arrow-right.svg" alt="">
 </button>
-
+    <div id="progress">1 / 15</div>
     <script src="app.js" ></script>
 </body>
 </html>

@@ -2,8 +2,25 @@ import json
 import sys
 import datetime
 import re
+from pathlib import Path
 
-text_file = open('vocabulary.txt', 'r')
+root_dir = Path.cwd().parent
+try:
+    input = next(root_dir.rglob(sys.argv[1]))
+except StopIteration:
+    print("chat.txt not found:(")
+
+try:
+    output = next(root_dir.rglob("data.json"))
+except StopIteration:
+    print("data.json not found:(")
+    
+try:
+    vocabulary = next(root_dir.rglob("vocabulary.txt"))
+except StopIteration:
+    print("vocabulary.txt not found:(")
+    
+text_file = open(vocabulary, 'r')
 text = text_file.readlines()[0]
 text_file.close()
 emoji_pattern = re.compile(
@@ -25,9 +42,9 @@ emojis = cleaned.split(",")
 emojis = list(filter(None, emojis))
 
 
-f = sys.argv[1]
+f = input
 
-outfile = open('data.json', 'w')
+outfile = open(output, 'w')
 file = open(f, 'r')
 lines = file.readlines()
 data = {}
@@ -250,7 +267,12 @@ for i in range(1, len(lines)):
     
 for key in rtime.keys():
     # need to provide the starting value in sum so that there is no type error
-    avg_rtime[key] = sum(rtime[key], datetime.timedelta(0)) / len(rtime[key])
+    sorted_times = sorted(rtime[key])
+    n = len(sorted_times)
+    if n%2 == 1:
+        avg_rtime[key] = sorted_times[n//2]
+    else:
+        avg_rtime[key] = (sorted_times[n//2 - 1] + sorted_times[n//2])/2
 
 min_rtime = min(avg_rtime.values())
 for key in avg_rtime.keys():
