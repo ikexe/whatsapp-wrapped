@@ -153,16 +153,16 @@ function handleSlideChange(index) {
 //Messages per user graph
 function createMessagesChart() {
     const users = data.per_person;
-    // console.log(users); // checking what it produces
+    console.log(users); // checking what it produces
     const labels = [];
     const values = [];
 
-    // for (let person in users) 
-    // {
-    //     console.log(person); // checking what it produces
-    //     labels.push(person);
-    //     values.push(users[person].total_messages);
-    // }
+    for (let person in users) 
+    {
+        console.log(person); // checking what it produces
+        labels.push(person);
+        values.push(users[person].total_messages);
+    }
 
     const chart_canvas = document.getElementById("messages-chart");
 
@@ -334,13 +334,13 @@ function createEmojiChart() {
     const labels = [];
     const values = [];
 
-    //for debugging
-    // for (let emoji in emojis) 
-    // {
-    //     console.log(emoji);
-    //     labels.push(emoji);
-    //     values.push(emojis[emoji]);
-    // }
+    
+    for (let emoji in emojis) 
+    {
+        console.log(emoji);
+        labels.push(emoji);
+        values.push(emojis[emoji]);
+    }
 
     const pie_chart_canvas = document.getElementById("emoji-chart");
 
