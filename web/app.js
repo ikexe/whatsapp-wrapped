@@ -1,10 +1,16 @@
+let cncseInit = false;
+let nightOwlInit = false;
+let hypeInit = false;
+let messagesInit = false;
+let wordsInit = false;
+let emojiInit = false;
 let data = null; //will store our JSON data
 let profilesInitialized = false;
 let shownProfiles = new Map(); // Here I have used set to prevent duplicate profiles
 let currentSlide = 0; // used to track which slide we are at currently (viewer will see this slide)
 let slides = []; // this will store all elements of HTML that act as slides.
 
-fetch('../data.json') // Fetched data from server(requesting a file named data.json)
+fetch('data.json') // Fetched data from server(requesting a file named data.json)
     .then(response => response.json()) // this respnse is then parsed into json format(converts the response to JSON)
     .then(jsonData => { // jsonData contains the javascript object and then data stores it and thne initialize function is called to run our website
         data = jsonData;
@@ -12,6 +18,23 @@ fetch('../data.json') // Fetched data from server(requesting a file named data.j
     })
     .catch(error => console.error('Error fetching JSON', error)); // if some error occurs in fetching or pasing file then it shows error
  
+function backClick()// to be done when clicked
+    {    
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length; // circular logic for changing slides
+        showSlide(currentSlide);
+    };
+function nextClick() // to be done when clicked
+    {
+        currentSlide = (currentSlide + 1) % slides.length; // circular logic for changing slides
+        showSlide(currentSlide);
+    };
+
+function KEY(k) 
+{
+    if (!slides.length) return;
+    if (k.key === "ArrowRight") nextClick();
+    if (k.key === "ArrowLeft") backClick();
+}
 
 function start() {
 
@@ -21,18 +44,8 @@ function start() {
     const back = document.getElementById("BackButton"); // back stores the element of back button 
 
     next.addEventListener("click", nextClick); // adds a click event to button
-    function nextClick() // to be done when clicked
-    {
-        currentSlide = (currentSlide + 1) % slides.length; // circular logic for changing slides
-        showSlide(currentSlide);
-    };
-
     back.addEventListener("click", backClick); // adds a click event to button
-    function backClick()// to be done when clicked
-    {    
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length; // circular logic for changing slides
-        showSlide(currentSlide);
-    };
+    document.addEventListener("keydown", KEY);
 
 }
 
@@ -45,18 +58,21 @@ function showSlide(index) {
             slides[i].classList.add("active"); // adds active class to the slide which is to be displayed
     }
     handleSlideChange(index); // what to do when we want show the slide of above index
+    document.getElementById("progress").textContent = `${index + 1} / ${slides.length}`;
 }
 
 function handleSlideChange(index) {
 
-    if (index == 1) 
+    if (index == 1 && !messagesInit) 
     {
         createMessagesChart();
+        messagesInit=true;
     }
 
-    if (index == 2) 
+    if (index == 2 && !wordsInit) 
     {
         createWordsChart();
+        wordsInit=true;
     }
 
     if (index == 3) 
@@ -67,11 +83,21 @@ function handleSlideChange(index) {
     if (index == 4)  
     {
         showCncseMsgr();
+        if(!cncseInit)
+        {
+            createCncseChart();
+            cncseInit=true;
+        }
     }
     
     if (index == 5) 
     {
         showNightOwl();
+        if(!nightOwlInit)
+        {
+            createNightOwlChart();
+            nightOwlInit=true;
+        }
     }
     
     if (index == 6) 
@@ -82,6 +108,11 @@ function handleSlideChange(index) {
     if (index == 7) 
     {
         showHypePerson();
+        if(!hypeInit)
+        {
+            createHypeChart();
+            hypeInit=true;
+        }
     }
 
     if (index == 8) 
@@ -104,9 +135,10 @@ function handleSlideChange(index) {
         showLongestSilence();
     }
     
-    if (index == 12) 
+    if (index == 12 && !emojiInit) 
     {
         createEmojiChart();
+        emojiInit=true;
     }
     
     
@@ -145,6 +177,7 @@ function createMessagesChart() {
         },
         options: {
             responsive: true,
+            maintainAspectRatio:false,
             plugins: {
                 legend: {
                     display: false
@@ -192,6 +225,7 @@ function createWordsChart() {
         },
         options: {
             responsive: true,
+            maintainAspectRatio:false,
             plugins: {
                 legend: {
                     display: false
@@ -217,8 +251,6 @@ function showCncseMsgr() {
     const nameEl = document.getElementById("cncse-msgr");
     const infoEl = document.getElementById("cncse-msgr-info");
     const name = data.group_stats.cncse_msgr;
-    const user = data.per_person[name];
-    const avg = (user.total_words / user.total_messages).toFixed(1);
     nameEl.textContent = "🤐 " + name;
     infoEl.textContent ='"Why waste time say lot word when few word do trick?"';
 }
@@ -228,8 +260,6 @@ function showNightOwl() {
     const infoEl = document.getElementById("night-owl-info");
 
     const name = data.group_stats.night_owl;
-    const user = data.per_person[name];
-
     nameEl.textContent = "🌙🦉" + name;
 
     infoEl.textContent =
@@ -239,12 +269,8 @@ function showNightOwl() {
 function showChatterBox() {
     const nameEl = document.getElementById("chatter-box");
     const infoEl = document.getElementById("chatter-box-info");
-
     const name = data.group_stats.chatterbox;
-    const user = data.per_person[name];
-
     nameEl.textContent = "📢" + name;
-
     infoEl.textContent = "Yappa Yappa. Certified Yapper. Peak Unemployment.";
 }
 
@@ -253,7 +279,6 @@ function showGhost() {
     const infoEl = document.getElementById("ghost-info");
 
     const name = data.group_stats.ghost;
-    const user = data.per_person[name];
 
     nameEl.textContent = "👻 " + name;
 
@@ -298,7 +323,8 @@ function createEmojiChart() {
     const labels = [];
     const values = [];
 
-    for (let emoji in emojis) {
+    for (let emoji in emojis) 
+    {
         console.log(emoji);
         labels.push(emoji);
         values.push(emojis[emoji]);
@@ -350,8 +376,6 @@ function showHypePerson() {
     const infoEl = document.getElementById("hype-person-info");
 
     const name = data.group_stats.hype_person;
-    const user = data.per_person[name];
-
     nameEl.textContent = "⚡ " + name;
 
     infoEl.textContent = "One of the greatest mysteries of nature how they are always online.";
@@ -362,7 +386,6 @@ function showSelectiveResponder() {
     const infoEl = document.getElementById("selective-responder-info");
 
     const name = data.group_stats.selective_responder;
-    const user = data.per_person[name];
 
     nameEl.textContent = "😉 " + name;
 
@@ -440,7 +463,7 @@ function createHeatmap(container, heatmapData) {
         const box = document.createElement("div");
         box.classList.add("heat-box");
 
-        // intensity (0 → 1)
+        // intensity (0 to 1)
         let intensity = value / max;
 
         // color scaling
@@ -451,5 +474,105 @@ function createHeatmap(container, heatmapData) {
 
         container.appendChild(box);
     }
+}
+
+function createCncseChart() {
+    const labels = [], values = [];
+    for (let person in data.per_person) {
+        const u = data.per_person[person];
+        labels.push(person);
+        values.push((u.total_words / u.total_messages).toFixed(2));
+    }
+    new Chart(document.getElementById("cncse-chart"), {
+        type: "bar",
+        data: {
+            labels,
+            datasets: [{
+                label: "Avg words / message",
+                data: values,
+                backgroundColor: "#ffe72ff0",
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: "white" } },
+                y: { ticks: { color: "white" } }
+            }
+        }
+    });
+}
+
+function createNightOwlChart() {
+    const totals = {};
+    for (let h = 0; h < 24; h++) {
+        const key = h < 10 ? "0" + h : "" + h;
+        totals[key] = 0;
+    }
+    for (let person in data.per_person) {
+        const hm = data.per_person[person].activity_heatmap;
+        for (let hour in hm) totals[hour] += hm[hour];
+    }
+    const labels = Object.keys(totals);
+    const values = Object.values(totals);
+    const colors = labels.map(h => parseInt(h) <=4 ? "#9552EA" : "#ffe241");
+
+    new Chart(document.getElementById("night-owl-chart"), {
+        type: "bar",
+        data: {
+            labels,
+            datasets: [{
+                label: "Messages",
+                data: values,
+                backgroundColor: colors,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: "white" }, title: { display: true, text: "Hour of day", color: "white" } },
+                y: { ticks: { color: "white" } }
+            }
+        }
+    });
+}
+
+function createHypeChart() {
+    const arr = [];
+    for (let person in data.per_person) {
+        arr.push({
+            name: person,
+            mins: parseFloat(data.per_person[person].avg_response_time_mins)
+        });
+    }
+    arr.sort((a, b) => a.mins - b.mins);  // fastest first
+
+    new Chart(document.getElementById("hype-chart"), {
+        type: "bar",
+        data: {
+            labels: arr.map(x => x.name),
+            datasets: [{
+                label: "Avg response time (mins)",
+                data: arr.map(x => x.mins),
+                backgroundColor: "#e1f03b",
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: "white" } },
+                y: { ticks: { color: "white" }, title: { display: true, text: "Minutes", color: "white" } }
+            }
+        }
+    });
 }
 
