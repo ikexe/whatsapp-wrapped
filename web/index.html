@@ -7,8 +7,9 @@
 </head>
 
 <body>
+    <!-- container contains all the content so that we can change it dynamically through js -->
     <div class="container">
-        <div class="slide active">  <!---->
+        <div class="slide active">  <!--The slides have a class slide and the active slide has a class active-->
             <h1>WhatsWrapped</h1>
             <p>Every chat tells a story. Yours just happens to be unhinged :p</p>
         </div>
@@ -18,6 +19,7 @@
             <p id="total-messages"></p>
             
             <div class="chart-box">
+                <!-- Creates a canvas for the chart from chart.js -->
                 <canvas id="messages-chart"></canvas>
             </div>
         </div>

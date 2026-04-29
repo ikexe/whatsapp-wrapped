@@ -149,18 +149,20 @@ function handleSlideChange(index) {
     }
 }
 
+
+//Messages per user graph
 function createMessagesChart() {
     const users = data.per_person;
-    console.log(users); // checking what it produces
+    // console.log(users); // checking what it produces
     const labels = [];
     const values = [];
 
-    for (let person in users) 
-    {
-        console.log(person); // checking what it produces
-        labels.push(person);
-        values.push(users[person].total_messages);
-    }
+    // for (let person in users) 
+    // {
+    //     console.log(person); // checking what it produces
+    //     labels.push(person);
+    //     values.push(users[person].total_messages);
+    // }
 
     const chart_canvas = document.getElementById("messages-chart");
 
@@ -199,6 +201,7 @@ function createMessagesChart() {
     });
 }
 
+//Words per user graph
 function createWordsChart() {
     const users = data.per_person;
 
@@ -247,6 +250,7 @@ function createWordsChart() {
     });
 }
 
+//The moncise messager
 function showCncseMsgr() {
     const nameEl = document.getElementById("cncse-msgr");
     const infoEl = document.getElementById("cncse-msgr-info");
@@ -255,17 +259,19 @@ function showCncseMsgr() {
     infoEl.textContent ='"Why waste time say lot word when few word do trick?"';
 }
 
+//The night owl
 function showNightOwl() {
     const nameEl = document.getElementById("night-owl");
     const infoEl = document.getElementById("night-owl-info");
 
-    const name = data.group_stats.night_owl;
+    const name = data.group_stats.night_owl; 
     nameEl.textContent = "\u{1F319}\u{1F989}" + name;
 
     infoEl.textContent =
         "Most messed up sleep schedule. Most active at ungodly hours.";
 }
 
+//The chatterbox
 function showChatterBox() {
     const nameEl = document.getElementById("chatter-box");
     const infoEl = document.getElementById("chatter-box-info");
@@ -274,6 +280,7 @@ function showChatterBox() {
     infoEl.textContent = "Yappa Yappa. Certified Yapper. Peak Unemployment.";
 }
 
+//The ghost
 function showGhost() {
     const nameEl = document.getElementById("ghost");
     const infoEl = document.getElementById("ghost-info");
@@ -285,6 +292,7 @@ function showGhost() {
     infoEl.textContent = "Gets ghosted most often \u{1F62D}";
 }
 
+//The Busiest Day
 function showBusiestDay() {
     const nameEl = document.getElementById("busiest-day");
     const infoEl = document.getElementById("busiest-day-info");
@@ -297,6 +305,7 @@ function showBusiestDay() {
         "Everybody was vibing \u{1F60E}";
 }
 
+//The Longest Silence
 function showLongestSilence() {
     const timeEl = document.getElementById("longest-silence");
     const infoEl = document.getElementById("silence-info");
@@ -309,6 +318,7 @@ function showLongestSilence() {
         "Quiet... Too Quiet. Where is everyone?";
 }
 
+//The convo starter
 function showConversationStarter() {
     const nameEl = document.getElementById("conversation-starter");
     const infoEl = document.getElementById("conversation-starter-info");
@@ -318,17 +328,19 @@ function showConversationStarter() {
         "Knows how to get the party started.";
 }
 
+//The emoji pie chart
 function createEmojiChart() {
     const emojis = data.emoji_stats;
     const labels = [];
     const values = [];
 
-    for (let emoji in emojis) 
-    {
-        console.log(emoji);
-        labels.push(emoji);
-        values.push(emojis[emoji]);
-    }
+    //for debugging
+    // for (let emoji in emojis) 
+    // {
+    //     console.log(emoji);
+    //     labels.push(emoji);
+    //     values.push(emojis[emoji]);
+    // }
 
     const pie_chart_canvas = document.getElementById("emoji-chart");
 
@@ -371,6 +383,7 @@ function createEmojiChart() {
     });
 }
 
+//The Hype Person
 function showHypePerson() {
     const nameEl = document.getElementById("hype-person");
     const infoEl = document.getElementById("hype-person-info");
@@ -381,6 +394,7 @@ function showHypePerson() {
     infoEl.textContent = "One of the greatest mysteries of nature how they are always online.";
 }
 
+//The Selective Responder (CUSTOM)
 function showSelectiveResponder() {
     const nameEl = document.getElementById("selective-responder");
     const infoEl = document.getElementById("selective-responder-info");
@@ -392,6 +406,7 @@ function showSelectiveResponder() {
     infoEl.textContent = 'Always ready to respond to their "Favourite person" \u{1F60F}';
 }
 
+//The buttons in the user profile page with each person's name
 function createProfileButtons() {
     const container = document.getElementById("profile-buttons");
 
@@ -407,6 +422,7 @@ function createProfileButtons() {
     }
 }
 
+//Enables the buttons to act as a toggle
 function toggleUserProfile(name,button) {
 
     if (shownProfiles.has(name)) 
@@ -443,6 +459,7 @@ function toggleUserProfile(name,button) {
     button.classList.add("active");
 }
 
+//Making the visual heatmap from the data in data.json
 function createHeatmap(container, heatmapData) {
     container.innerHTML = "";
 
@@ -476,6 +493,7 @@ function createHeatmap(container, heatmapData) {
     }
 }
 
+//The graph of average words per message to show the difference between cncse_msgr and the others
 function createCncseChart() {
     const labels = [], values = [];
     for (let person in data.per_person) {
@@ -506,6 +524,7 @@ function createCncseChart() {
     });
 }
 
+//To show the active hours of the Nightowl
 function createNightOwlChart() {
     const totals = {};
     for (let h = 0; h < 24; h++) {
@@ -543,6 +562,7 @@ function createNightOwlChart() {
     });
 }
 
+//To show the avg response time of everyone
 function createHypeChart() {
     const arr = [];
     for (let person in data.per_person) {
