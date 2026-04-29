@@ -28,6 +28,7 @@ whatsapp-wrapped/
 │   ├── arrow-left.svg
 │   └── arrow-right.svg
 ├── report/
+|   ├── report.pdf
 │   ├── report.tex
 │   ├── Makefile
 │   ├── FIRST_SLIDE.png
