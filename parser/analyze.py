@@ -267,7 +267,12 @@ for i in range(1, len(lines)):
     
 for key in rtime.keys():
     # need to provide the starting value in sum so that there is no type error
-    avg_rtime[key] = sum(rtime[key], datetime.timedelta(0)) / len(rtime[key])
+    sorted_times = sorted(rtime[key])
+    n = len(sorted_times)
+    if n%2 == 1:
+        avg_rtime[key] = sorted_times[n//2]
+    else:
+        avg_rtime[key] = (sorted_times[n//2 - 1] + sorted_times[n//2])/2
 
 min_rtime = min(avg_rtime.values())
 for key in avg_rtime.keys():

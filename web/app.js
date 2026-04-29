@@ -251,7 +251,7 @@ function showCncseMsgr() {
     const nameEl = document.getElementById("cncse-msgr");
     const infoEl = document.getElementById("cncse-msgr-info");
     const name = data.group_stats.cncse_msgr;
-    nameEl.textContent = "🤐 " + name;
+    nameEl.textContent = "\u{1F910} " + name;
     infoEl.textContent ='"Why waste time say lot word when few word do trick?"';
 }
 
@@ -260,7 +260,7 @@ function showNightOwl() {
     const infoEl = document.getElementById("night-owl-info");
 
     const name = data.group_stats.night_owl;
-    nameEl.textContent = "🌙🦉" + name;
+    nameEl.textContent = "\u{1F319}\u{1F989}" + name;
 
     infoEl.textContent =
         "Most messed up sleep schedule. Most active at ungodly hours.";
@@ -270,7 +270,7 @@ function showChatterBox() {
     const nameEl = document.getElementById("chatter-box");
     const infoEl = document.getElementById("chatter-box-info");
     const name = data.group_stats.chatterbox;
-    nameEl.textContent = "📢" + name;
+    nameEl.textContent = "\uD83D\uDCE2" + name;
     infoEl.textContent = "Yappa Yappa. Certified Yapper. Peak Unemployment.";
 }
 
@@ -280,9 +280,9 @@ function showGhost() {
 
     const name = data.group_stats.ghost;
 
-    nameEl.textContent = "👻 " + name;
+    nameEl.textContent = "\u{1F47B} " + name;
 
-    infoEl.textContent = "Gets ghosted most often ಥ_ಥ";
+    infoEl.textContent = "Gets ghosted most often \u{1F62D}";
 }
 
 function showBusiestDay() {
@@ -291,10 +291,10 @@ function showBusiestDay() {
 
     const day = data.group_stats.busiest_day;
 
-    nameEl.textContent = "📅 " + day;
+    nameEl.textContent = "\u{1F4C5} " + day;
 
     infoEl.textContent =
-        "Everybody was vibing 😎";
+        "Everybody was vibing \u{1F60E}";
 }
 
 function showLongestSilence() {
@@ -303,7 +303,7 @@ function showLongestSilence() {
 
     const silence = data.group_stats.longest_silence;
 
-    timeEl.textContent = "😶 " + silence;
+    timeEl.textContent = "\u{1F636} " + silence;
 
     infoEl.textContent =
         "Quiet... Too Quiet. Where is everyone?";
@@ -313,7 +313,7 @@ function showConversationStarter() {
     const nameEl = document.getElementById("conversation-starter");
     const infoEl = document.getElementById("conversation-starter-info");
     const name = data.group_stats.conversation_starter;
-    nameEl.textContent = "🔥 " + name;
+    nameEl.textContent = "\u{1F525} " + name;
     infoEl.textContent =
         "Knows how to get the party started.";
 }
@@ -376,7 +376,7 @@ function showHypePerson() {
     const infoEl = document.getElementById("hype-person-info");
 
     const name = data.group_stats.hype_person;
-    nameEl.textContent = "⚡ " + name;
+    nameEl.textContent = "\u26A1 " + name;
 
     infoEl.textContent = "One of the greatest mysteries of nature how they are always online.";
 }
@@ -387,9 +387,9 @@ function showSelectiveResponder() {
 
     const name = data.group_stats.selective_responder;
 
-    nameEl.textContent = "😉 " + name;
+    nameEl.textContent = "\u{1F609} " + name;
 
-    infoEl.textContent = 'Always ready to respond to their "Favourite person" 😏';
+    infoEl.textContent = 'Always ready to respond to their "Favourite person" \u{1F60F}';
 }
 
 function createProfileButtons() {
@@ -430,7 +430,7 @@ function toggleUserProfile(name,button) {
         <p>Top Emojis: ${user.top3_emojis.join(", ")}</p>
         <p>Avg Response Time: ${user.avg_response_time_mins} mins</p>
         <br>
-        <p style="font-size:1.25em; color:pink";>Activity Heatmap 🥵</p>
+        <p style="font-size:1.25em; color:pink";>Activity Heatmap \u{1F975}</p>
         <div class="heatmap"></div>
     `;
 
