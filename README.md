@@ -28,10 +28,12 @@ whatsapp-wrapped/
 │   ├── arrow-left.svg
 │   └── arrow-right.svg
 ├── report/
+|   ├── report.pdf
 │   ├── report.tex
 │   ├── Makefile
 │   ├── FIRST_SLIDE.png
-│   └── LAST_SLIDE.png
+│   |── LAST_SLIDE.png
+|   └── refernces.bib
 ├── vocabulary.txt
 ├── chat.txt
 ├── data.json
