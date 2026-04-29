@@ -2,8 +2,25 @@ import json
 import sys
 import datetime
 import re
+from pathlib import Path
 
-text_file = open('vocabulary.txt', 'r')
+root_dir = Path.cwd().parent
+try:
+    input = next(root_dir.rglob(sys.argv[1]))
+except StopIteration:
+    print("chat.txt not found:(")
+
+try:
+    output = next(root_dir.rglob("data.json"))
+except StopIteration:
+    print("data.json not found:(")
+    
+try:
+    vocabulary = next(root_dir.rglob("vocabulary.txt"))
+except StopIteration:
+    print("vocabulary.txt not found:(")
+    
+text_file = open(vocabulary, 'r')
 text = text_file.readlines()[0]
 text_file.close()
 emoji_pattern = re.compile(
@@ -25,9 +42,9 @@ emojis = cleaned.split(",")
 emojis = list(filter(None, emojis))
 
 
-f = sys.argv[1]
+f = input
 
-outfile = open('data.json', 'w')
+outfile = open(output, 'w')
 file = open(f, 'r')
 lines = file.readlines()
 data = {}

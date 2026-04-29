@@ -3,6 +3,18 @@ from numpy import random
 from numpy import datetime64
 import datetime
 import sys
+from pathlib import Path
+root_dir = Path.cwd().parent
+
+try:
+    output = next(root_dir.rglob("chat.txt"))
+except StopIteration:
+    print("chat.txt not found:(")
+
+try:
+    vocabulary = next(root_dir.rglob("vocabulary.txt"))
+except StopIteration:
+    print("vocabulary.txt not found:(")
 
 members = ['Ishan', 'Abhinav', 'Lokesh', 'Mohan', 'Rishanth', 'Bhanu', 'Rutvik'] #members of the gc (who took cs108 this sem :p)
 
@@ -19,9 +31,7 @@ def rand_time():
     minutes = random.randint(0,60)
     return  datetime.time(hour, minutes)
 
-vocabulary = sys.argv[1]
-
-f = open('chat.txt', 'w')
+f = open(output, 'w')
 #generating the chat
 #taking a span of 1 year to start off say 1-1-25 to 1-2-25
 with open(vocabulary, 'r') as file:
